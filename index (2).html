@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Antarāl · Prototype</title>
+<meta name="description" content="Antarāl: know your worth on the way in, see trouble early, and never face the way out alone. Service design prototype.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=block" rel="stylesheet">
+<style>
+:root{
+  --blue:#1A73E8; --blue-l:#E8F0FE; --blue-on:#D3E3FD; --blue-ink:#041E49;
+  --red:#D93025; --red-b:#EA4335; --red-l:#FCE8E6;
+  --yel:#B06000; --yel-b:#FBBC04; --yel-l:#FEF7E0;
+  --grn:#188038; --grn-b:#34A853; --grn-l:#E6F4EA;
+  --ink:#1F1F1F; --mut:#5F6368; --ic:#444746;
+  --page:#F8FAFD; --panel:#FFFFFF; --card:#F1F3F4; --line:#E8EAED; --search:#E9EEF6;
+  --r-card:24px; --r-pill:100px;
+  --font:"Google Sans Flex","Google Sans",Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--page);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.4;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+.ms{font-family:"Material Symbols Rounded";font-weight:normal;font-style:normal;font-size:22px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;direction:ltr;-webkit-font-feature-settings:"liga";font-feature-settings:"liga";color:var(--ic);flex:none;user-select:none}
+.ms.fill{font-variation-settings:"FILL" 1}
+
+/* ---------- shell ---------- */
+.app{display:grid;grid-template-columns:272px 1fr;grid-template-rows:72px 1fr;min-height:100vh}
+.drawer{grid-row:1/3;padding:16px 12px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:10px;padding:8px 16px;font-size:24px;color:var(--ic)}
+.brand .dot{width:28px;height:28px;border-radius:50%;background:var(--blue)}
+.mode{padding:4px 16px 12px}
+.action{display:flex;align-items:center;gap:12px;padding:16px 20px;border-radius:16px;border:0;cursor:pointer;font-weight:500;margin-bottom:12px;text-align:left}
+.action.calm{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.action.calm .ms{color:var(--red)}
+.action.layoff{background:var(--red-l);color:var(--red)}
+.action.layoff .ms{color:var(--red)}
+.action.back{background:var(--blue-l);color:var(--blue)}
+.action.back .ms{color:var(--blue)}
+.navi{display:flex;align-items:center;gap:14px;padding:12px 20px;border-radius:var(--r-pill);color:var(--ic);font-weight:500}
+.navi:hover{background:#E9EEF6}
+.navi.on{background:var(--blue-on);color:var(--blue-ink);font-weight:700}
+.navi.on .ms{color:var(--blue-ink);font-variation-settings:"FILL" 1}
+.drawer .foot{margin-top:auto;padding:16px;font-size:12px;color:var(--mut)}
+.top{display:flex;align-items:center;gap:16px;padding:12px 24px 12px 0}
+.search{flex:0 1 720px;display:flex;align-items:center;gap:14px;background:var(--search);border-radius:28px;padding:0 20px;height:48px;color:var(--mut)}
+.search input{border:0;background:transparent;outline:0;flex:1;font-size:15px}
+.top .right{margin-left:auto;display:flex;align-items:center;gap:18px}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:500;flex:none}
+main{background:var(--panel);border-radius:24px;margin:0 24px 24px 0;padding:28px 40px 40px;min-height:calc(100vh - 96px)}
+.mobilebar,.bottomnav{display:none}
+
+/* ---------- content ---------- */
+h1{font-size:32px;font-weight:400;margin:0}
+.sub{color:var(--mut);margin:6px 0 24px}
+.grid{display:grid;gap:16px;align-items:start}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.col{display:flex;flex-direction:column;gap:16px}
+.card{background:var(--card);border-radius:var(--r-card);padding:20px;display:flex;flex-direction:column;gap:12px}
+.card.link{cursor:pointer;transition:filter .15s}
+.card.link:hover{filter:brightness(.97)}
+.card.blue{background:var(--blue);color:#fff}
+.card.blue .lbl{color:#D2E3FC}
+.card.bl{background:var(--blue-l)} .card.rl{background:var(--red-l)} .card.yl{background:var(--yel-l)} .card.gl{background:var(--grn-l)}
+.card.outline{background:#fff;border:1px solid var(--line)}
+.lbl{font-size:13px;font-weight:500;color:var(--mut)}
+.big{font-size:44px;font-weight:400;line-height:1.1}
+.mid{font-size:24px;font-weight:400}
+.muted{color:var(--mut);font-size:13px}
+.row{display:flex;align-items:center;gap:10px;min-height:28px}
+.row .grow{flex:1}
+.row .val{font-weight:500}
+.chip{display:inline-flex;align-items:center;padding:4px 10px;border-radius:8px;font-size:12px;font-weight:500;white-space:nowrap}
+.c-g{background:var(--grn-l);color:var(--grn)} .c-r{background:var(--red-l);color:var(--red)} .c-y{background:var(--yel-l);color:var(--yel)} .c-b{background:var(--blue-l);color:var(--blue)} .c-w{background:#fff;color:var(--blue)} .c-bs{background:var(--blue);color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:var(--r-pill);padding:10px 24px;border:0;cursor:pointer;font-weight:500;background:var(--blue);color:#fff;font-size:14px}
+.btn .ms{font-size:18px;color:inherit}
+.btn.out{background:transparent;border:1px solid #747775;color:var(--blue)}
+.btn.red{background:var(--red)} .btn.grn{background:var(--grn)}
+.btn.block{width:100%}
+.btn:disabled{opacity:.6;cursor:default}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar>i{display:block;height:100%;border-radius:4px;background:var(--blue)}
+.card.blue .bar{background:#8AB4F8} .card.blue .bar>i{background:#fff}
+.av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:500;flex:none}
+.banner{display:flex;align-items:center;gap:16px;background:var(--red-l);border-radius:var(--r-card);padding:18px 24px;margin-bottom:16px}
+.banner .ms{color:var(--red);font-size:28px}
+.banner b{color:var(--red);font-weight:500;font-size:17px}
+.check{display:flex;align-items:center;gap:10px;cursor:pointer;min-height:30px}
+.check input{display:none}
+.check .ms{color:var(--ic)}
+.check.done span.t{color:var(--mut)}
+.check.done .ms{color:var(--grn)}
+.field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:120px}
+.field label{font-size:12px;color:var(--mut);font-weight:500}
+.field input,.inp{border:1px solid #C4C7C5;border-radius:12px;padding:10px 12px;background:#fff;outline:0}
+.field input:focus,.inp:focus{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue)}
+.fields{display:flex;gap:12px;flex-wrap:wrap}
+.toggle{width:44px;height:26px;border-radius:13px;background:#C4C7C5;position:relative;border:0;cursor:pointer;flex:none}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s}
+.toggle.on{background:var(--blue)} .toggle.on::after{left:21px}
+.quote{font-style:italic;background:#fff;border-radius:16px;padding:14px 16px}
+.timeline .row{border-left:2px solid var(--line);padding-left:12px;margin-left:10px}
+
+/* dialog + toast */
+dialog{border:0;border-radius:28px;padding:24px;max-width:560px;width:calc(100% - 32px);box-shadow:0 8px 32px rgba(0,0,0,.2)}
+dialog::backdrop{background:rgba(0,0,0,.32)}
+dialog h2{font-weight:400;font-size:24px;margin:0 0 8px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#303030;color:#fff;padding:14px 20px;border-radius:12px;transition:transform .25s;z-index:20;max-width:calc(100% - 32px)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ---------- mobile ---------- */
+@media (max-width:900px){
+  .app{display:block}
+  .drawer,.top{display:none}
+  .mobilebar{display:flex;align-items:center;gap:10px;padding:14px 16px;position:sticky;top:0;background:var(--page);z-index:5}
+  .mobilebar .brand{padding:0;font-size:20px}
+  .mobilebar .brand .dot{width:22px;height:22px}
+  .mobilebar .right{margin-left:auto;display:flex;align-items:center;gap:10px}
+  main{margin:0;border-radius:0;padding:12px 16px 104px;min-height:auto;background:var(--page)}
+  main .card{background:#fff}
+  main .card.blue{background:var(--blue)} main .card.bl{background:var(--blue-l)} main .card.rl{background:var(--red-l)} main .card.yl{background:var(--yel-l)} main .card.gl{background:var(--grn-l)}
+  h1{font-size:28px}
+  .g2,.g3{grid-template-columns:1fr}
+  .banner{flex-wrap:wrap}
+  .bottomnav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#F3F6FC;padding:10px 4px calc(10px + env(safe-area-inset-bottom));justify-content:space-around;z-index:5}
+  .bottomnav a{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;font-weight:500;color:var(--ic);min-width:60px}
+  .bottomnav .pill{width:56px;height:32px;border-radius:16px;display:grid;place-items:center}
+  .bottomnav a.on{color:var(--ink);font-weight:700}
+  .bottomnav a.on .pill{background:var(--blue-on)}
+  .bottomnav a.on .ms{color:var(--blue-ink);font-variation-settings:"FILL" 1}
+  .toast{bottom:96px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="drawer" id="drawer"></aside>
+  <div class="top">
+    <label class="search"><span class="ms">search</span><input id="q" placeholder="Search your plan, documents and people" aria-label="Search"></label>
+    <div class="right"><button class="ms" title="Reset prototype" id="resetBtn" style="background:none;border:0;cursor:pointer">restart_alt</button><span class="ms">help</span><span class="avatar">A</span></div>
+  </div>
+  <header class="mobilebar"><div class="brand"><span class="dot"></span>Antarāl</div><div class="right" id="mchip"></div><span class="avatar">A</span></header>
+  <main id="view" tabindex="-1"></main>
+  <nav class="bottomnav" id="bnav"></nav>
+</div>
+
+<dialog id="signDlg">
+  <h2>Don't sign yet</h2>
+  <p class="muted" style="font-size:14px;margin:0 0 16px">HR asked you to resign? Signing a resignation can't be undone.</p>
+  <div class="card rl" style="gap:8px">
+    <div class="row"><span class="ms" style="color:var(--red)">payments</span><span class="grow">Severance</span><span class="val" style="color:var(--red)">May be lost</span></div>
+    <div class="row"><span class="ms" style="color:var(--red)">shield</span><span class="grow">Job-loss insurance claim</span><span class="val" style="color:var(--red)">May not pay</span></div>
+    <div class="row"><span class="ms" style="color:var(--grn)">badge</span><span class="grow">Your CV story</span><span class="val" style="color:var(--grn)">You control it either way</span></div>
+  </div>
+  <p class="lbl" style="margin:16px 0 8px">Ask for 48 hours, in writing</p>
+  <div class="quote" id="tmpl">Dear Neha, thank you for letting me know. Before I sign anything, I'd like 48 hours and the full terms of my exit (notice, severance, F&amp;F and health cover) in writing.</div>
+  <div class="btns" style="margin-top:16px">
+    <button class="btn out" data-act="copy"><span class="ms">content_copy</span>Copy email</button>
+    <button class="btn red" data-act="lawyer"><span class="ms">gavel</span>Request lawyer callback</button>
+    <button class="btn out" data-act="close" style="margin-left:auto">Close</button>
+  </div>
+  <p class="muted" style="margin:12px 0 0">Lawyer callbacks usually arrive within 4 hours and are free in layoff mode.</p>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ---------------- state ---------------- */
+const DEFAULT = {
+  mode:'calm',                 // calm | layoff | back
+  fixes:[false,false,false],   // fire-drill quick fixes
+  checklist:[true,true,true,false,false,false],
+  money:{savings:320000, ff:140000, pf:210000, monthly:160000},
+  cuts:{gym:false, ott:false},
+  signed:false, referral:false, callback:false,
+  offer:18,
+  hideSalary:true,
+  promises:[{t:'18 Nov, 4:12 pm', x:'Neha (HR) said on the call that severance would match others in the batch.'}],
+  pledge:{god:true, call:true, ref:false},
+  outcome:false
+};
+const KEY='antaral-prototype-v1';
+let S;
+try{ S = Object.assign(structuredClone(DEFAULT), JSON.parse(localStorage.getItem(KEY)||'{}')); }catch(e){ S = structuredClone(DEFAULT); }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+
+/* ---------------- helpers ---------------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const L = n => '₹' + (n/100000).toFixed(1).replace(/\.0$/,'') + ' L';
+const ic = (n, cls='', style='') => `<span class="ms ${cls}" style="${style}">${n}</span>`;
+const chip = (t, c) => `<span class="chip ${c}">${t}</span>`;
+const bar = (pct, col) => `<div class="bar"><i style="width:${Math.max(3,Math.min(100,pct))}%;${col?'background:'+col:''}"></i></div>`;
+const av = (t, bg, fg='#fff', size=40) => `<span class="av" style="background:${bg};color:${fg};width:${size}px;height:${size}px;font-size:${size*.4}px">${t}</span>`;
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2600); }
+
+function runway(){
+  const m=S.money, cut=(S.cuts.gym?2500:0)+(S.cuts.ott?650:0);
+  const monthly=Math.max(1,m.monthly-cut), pot=m.savings+m.ff+m.pf;
+  const months=pot/monthly;
+  const d=new Date(); d.setDate(d.getDate()+Math.round(months*30.44));
+  return {months, pot, monthly, date:d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})};
+}
+function daysGained(amount){ const m=S.money, pot=m.savings+m.ff+m.pf; return Math.round((pot/(m.monthly-amount) - pot/m.monthly)*30.44); }
+
+/* ---------------- shell ---------------- */
+const NAV=[['home','Home','home'],['money','Money','account_balance_wallet'],['people','People','group'],['plan','Plan','explore'],['vault','Vault','lock'],['family','Family','family_restroom']];
+function modeChip(){ return S.mode==='calm'?chip('Calm mode','c-g'):S.mode==='layoff'?chip('Layoff mode · Day 3','c-r'):chip('Back at work','c-b'); }
+function renderShell(route){
+  const act = S.mode==='calm' ? `<button class="action calm" data-act="laidoff">${ic('campaign')}I've been laid off</button>`
+            : S.mode==='layoff' ? `<button class="action layoff" data-act="sign">${ic('front_hand')}Don't sign yet</button>`
+            : `<button class="action back" data-act="calm">${ic('spa')}Back to calm mode</button>`;
+  $('#drawer').innerHTML = `<div class="brand"><span class="dot"></span>Antarāl</div><div class="mode">${modeChip()}</div>${act}
+    ${NAV.map(([k,l,i])=>`<a class="navi ${route===k?'on':''}" href="#/${k}">${ic(i)}${l}</a>`).join('')}
+    <div class="foot">Service design prototype · data is fictional and stays in your browser.</div>`;
+  $('#bnav').innerHTML = NAV.filter(n=>n[0]!=='family').map(([k,l,i])=>`<a class="${route===k||(route==='family'&&k==='vault')?'on':''}" href="#/${k}"><span class="pill">${ic(i)}</span>${l}</a>`).join('');
+  $('#mchip').innerHTML = modeChip();
+}
+
+/* ---------------- views ---------------- */
+function viewCalm(){
+  const score = 7 + S.fixes.filter(Boolean).length;
+  const fixes=[['description','Save last 3 payslips to Vault','2 min'],['health_and_safety','Check when health cover ends','1 min'],['school','Add a skill to your someday list','3 min']];
+  return `<h1>Good morning, Arjun</h1><p class="sub">Product designer at Finlo · everything is calm</p>
+  <div class="grid g2"><div class="col">
+    <div class="card bl"><span class="lbl" style="color:var(--blue)">Yearly fire drill</span><span class="big" style="color:var(--blue)">${score} / 10</span>
+      <b style="font-weight:500">${score===10?'All done. See you next appraisal season.':`${3-S.fixes.filter(Boolean).length} quick fixes before appraisal season`}</b>
+      ${fixes.map(([i,t,m],n)=>`<label class="check ${S.fixes[n]?'done':''}"><input type="checkbox" data-fix="${n}" ${S.fixes[n]?'checked':''}>${ic(S.fixes[n]?'check_circle':i)}<span class="t grow">${t}</span>${chip(m,'c-w')}</label>`).join('')}
+    </div>
+    <div class="card"><div class="row">${ic('radar')}<b class="grow" style="font-weight:500">Employer radar · Finlo</b>${chip('2 signals','c-y')}</div>
+      <span class="muted" style="font-size:14px">Two members reported delayed salaries this month. Prepare, don't panic: save your documents while you still have access.</span>
+      <div><a class="btn out" href="#/vault">Open prepare mode</a></div></div>
+  </div><div class="col">
+    <div class="grid g2"><div class="card gl"><span class="lbl" style="color:var(--grn)">Contingency fund</span><span class="mid" style="font-size:30px">₹42,000</span><span class="muted">+₹3,000 a month, automatically</span></div>
+      <div class="card yl"><span class="lbl" style="color:var(--yel)">Skill forecast</span><span class="mid">UX research</span><span class="muted">Hiring up 18% in Bengaluru</span></div></div>
+    <div class="card"><span class="lbl">Your exit terms · saved on offer day</span>
+      <div class="row">${ic('event')}<span class="grow">Notice period · 60 days</span>${chip('Matches benchmark','c-g')}</div>
+      <div class="row">${ic('health_and_safety')}<span class="grow">Health cover after exit</span>${chip('In writing','c-g')}</div>
+      <div class="row">${ic('payments')}<span class="grow">Severance</span>${chip('Below benchmark','c-y')}</div></div>
+    <a class="card link" href="#/people"><div class="row">${av('M','var(--grn-b)')}<div class="grow"><b style="font-weight:500">Meera · your godparent</b><div class="muted">Design lead · checks in once a year · next in January</div></div>${ic('chevron_right')}</div></a>
+    <button class="btn red block" data-act="laidoff">${ic('campaign')}I've been laid off</button>
+  </div></div>`;
+}
+function viewLayoff(){
+  const r=runway(); const done=S.checklist.filter(Boolean).length;
+  const items=['Don\'t sign anything','Enter 3 numbers for your runway','Save payslips and offer letter','Ask HR for terms in writing','Check when health cover ends','Tell one person you trust'];
+  return `<h1>Hi Arjun</h1><p class="sub">Day 3 since your layoff · you're not alone</p>
+  <div class="banner">${ic('front_hand')}<div style="flex:1;min-width:220px"><b>Asked to resign? Don't sign anything yet.</b><div style="font-size:13px">Signing can cost you severance and a job-loss insurance claim. You can ask for 48 hours and the terms in writing.</div></div>
+    <div class="btns"><button class="btn out" style="color:var(--red)" data-act="sign">What signing changes</button><button class="btn red" data-act="lawyer">${S.callback?'Callback requested':'Lawyer callback'}</button></div></div>
+  <div class="grid g3"><div class="col">
+    <a class="card blue link" href="#/money"><span class="lbl">Your runway</span><span class="big">${r.months.toFixed(1)} months</span><span style="font-size:14px;color:#E8F0FE">Your money lasts until ${r.date}</span>${bar(Math.min(100,r.months/6*100))}</a>
+    <a class="card link" href="#/money"><span class="lbl">Next decisions</span>
+      <div class="row">${ic('receipt_long')}<span class="grow">Check your F&amp;F</span>${chip('Due Fri','c-r')}</div>
+      <div class="row">${ic('savings')}<span class="grow">Gratuity due</span><span class="muted">19 Dec</span></div>
+      <div class="row">${ic('alt_route')}<span class="grow">Choose a direction</span><span class="muted">2 Jan</span></div></a>
+  </div><div class="col">
+    <div class="card"><div class="row"><b class="grow" style="font-weight:500">Your first 48 hours</b><span style="color:var(--blue);font-weight:500">${done} of 6</span></div>${bar(done/6*100)}
+      ${items.map((t,n)=>`<label class="check ${S.checklist[n]?'done':''}"><input type="checkbox" data-chk="${n}" ${S.checklist[n]?'checked':''}>${ic(S.checklist[n]?'check_circle':'radio_button_unchecked')}<span class="t">${t}</span></label>`).join('')}
+    </div>
+  </div><div class="col">
+    <a class="card gl link" href="#/people"><div class="row">${av('M','var(--grn-b)')}<div><b style="font-weight:500">Meera calls at 7 pm</b><div class="muted">Your godparent · laid off in 2024</div></div></div></a>
+    <a class="card link" href="#/people"><div class="row">${ic('groups')}<b class="grow" style="font-weight:500">Finlo batch pod</b><span class="muted">23 members</span></div><span class="muted">Joint query to HR: ${S.signed?15:14} of 23 signed</span>${bar((S.signed?15:14)/23*100)}</a>
+    <a class="card link" href="#/money"><span class="lbl">Dues</span><div class="row"><span class="grow">Final salary</span>${chip('Paid','c-g')}</div><div class="row"><span class="grow">Leave encashment</span>${chip('Overdue','c-r')}</div><div class="row"><span class="grow">Gratuity</span>${chip('Pending','c-y')}</div></a>
+  </div></div>`;
+}
+function viewBack(){
+  const p=S.pledge;
+  const tl=[['front_hand','var(--red)','Laid off · didn\'t sign the resignation','18 Nov'],['groups','var(--blue)','Batch query · package raised by a month','22 Nov'],['family_restroom','var(--grn)','Family brief shared · EMIs covered','2 Dec'],['design_services','var(--yel)','Batch studio project starts','15 Dec'],['handshake','var(--blue)','Offer negotiated at Zeta','3 Feb']];
+  const pr=(k,i,t)=>`<div class="row">${ic(i)}<span class="grow">${t}</span><button class="toggle ${p[k]?'on':''}" data-pledge="${k}" aria-label="${t}"></button></div>`;
+  return `<h1>Welcome back, Arjun</h1><p class="sub">Week 11 · Senior product designer at Zeta</p>
+  <div class="grid g2"><div class="col">
+    <div class="card gl"><span class="lbl" style="color:var(--grn)">You made it</span><span class="big">11 weeks · ${L(S.offer*100000)}</span><b style="font-weight:500">No missed EMI · offer negotiated up from the first number</b></div>
+    <div class="card timeline"><span class="lbl">Your journey</span>${tl.map(([i,c,t,d])=>`<div class="row">${ic(i,'','color:'+c)}<span class="grow">${t}</span><span class="muted">${d}</span></div>`).join('')}</div>
+  </div><div class="col">
+    <div class="card"><div class="row">${ic('insights')}<b class="grow" style="font-weight:500">Record your outcome</b>${S.outcome?chip('Done','c-g'):`<button class="btn" data-act="outcome">Record (2 min)</button>`}</div><span class="muted">Your numbers help the next 23 people in your batch.</span></div>
+    <div class="card bl"><span class="lbl" style="color:var(--blue)">Pass it forward</span>${pr('god','volunteer_activism','Become a godparent')}${pr('call','call','One 20-min call a month')}${pr('ref','person_add','Refer someone to Zeta')}
+      <div class="row">${ic('stars')}<span class="grow">Credits earned</span><b style="color:var(--blue);font-size:18px;font-weight:500">${2+2*Object.values(p).filter(Boolean).length}</b></div></div>
+    <button class="btn block" data-act="calm">Back to calm mode</button>
+  </div></div>`;
+}
+function viewMoney(){
+  const r=runway(), m=S.money;
+  const f=(k,l)=>`<div class="field"><label for="m-${k}">${l}</label><input id="m-${k}" type="number" min="0" step="1000" value="${m[k]}" data-money="${k}"></div>`;
+  return `<h1>Money</h1><p class="sub">Runway, package and dues · edit the numbers to see your runway change</p>
+  <div class="grid g2"><div class="col">
+    <div class="card blue"><span class="lbl">Your runway</span><span class="big" id="rw-m">${r.months.toFixed(1)} months</span><span style="font-size:14px;color:#E8F0FE" id="rw-d">Your money lasts until ${r.date}</span>${bar(Math.min(100,r.months/6*100))}</div>
+    <div class="card"><span class="lbl">What it's built from (₹)</span><div class="fields">${f('savings','Savings')}${f('ff','F&F expected')}</div><div class="fields">${f('pf','PF available now (75%)')}${f('monthly','Monthly costs incl. EMI')}</div>
+      <span class="muted">PF rule: 75% can be withdrawn right away; the rest after 12 months without a job.</span></div>
+    <div class="card gl"><span class="lbl" style="color:var(--grn)">Cuts that buy time</span>
+      <div class="row">${ic('fitness_center')}<span class="grow">Pause gym membership (₹2,500)</span><span style="color:var(--grn);font-weight:500">+${daysGained(2500)} days</span><button class="toggle ${S.cuts.gym?'on':''}" data-cut="gym" aria-label="Pause gym"></button></div>
+      <div class="row">${ic('live_tv')}<span class="grow">Share one streaming plan (₹650)</span><span style="color:var(--grn);font-weight:500">+${daysGained(650)} days</span><button class="toggle ${S.cuts.ott?'on':''}" data-cut="ott" aria-label="Share streaming plan"></button></div></div>
+  </div><div class="col">
+    <div class="card"><span class="lbl">Severance vs your batch · 23 people</span>
+      <div class="row"><span class="grow">You</span><b style="font-weight:500">2 months</b></div>${bar(66,'var(--red)')}
+      <div class="row"><span class="grow">Batch median</span><b style="font-weight:500">3 months</b></div>${bar(100)}
+      <b style="color:var(--red);font-weight:500">You got one month less than others in your batch.</b></div>
+    <div class="card"><span class="lbl">Dues tracker</span>
+      <div class="row">${ic('payments')}<span class="grow">Final salary · due 21 Nov</span>${chip('Paid','c-g')}</div>
+      <div class="row">${ic('event_busy')}<span class="grow">Leave encashment · due 21 Nov</span>${chip('Overdue','c-r')}</div>
+      <div class="row">${ic('savings')}<span class="grow">Gratuity · due 19 Dec</span>${chip('Pending','c-y')}</div>
+      <div class="row">${ic('account_balance')}<span class="grow">PF · 75% available now</span>${chip('Claimed','c-b')}</div>
+      <span class="muted">Under the Code on Wages, F&amp;F wages are due within 2 working days of your last day; gratuity within 30 days.</span>
+      <div class="btns"><a class="btn" href="#/people">Join batch query</a><button class="btn out" data-act="duesletter">Overdue-dues letter</button></div></div>
+    <div class="card"><span class="lbl">Decision calendar</span>
+      <div class="row">${ic('event')}<span class="grow">Fri · Check your F&amp;F</span>${chip('This week','c-r')}</div>
+      <div class="row">${ic('event')}<span class="grow">19 Dec · Gratuity due</span></div>
+      <div class="row">${ic('event')}<span class="grow">2 Jan · Pivot or not?</span></div>
+      <div class="row">${ic('event')}<span class="grow">6 weeks before runway ends · offer floor shifts</span></div></div>
+  </div></div>`;
+}
+function viewPeople(){
+  const n=S.signed?15:14;
+  const msg=(i,c,fg,name,t)=>`<div class="card"><div class="row">${av(i,c,fg,32)}<b style="font-weight:500">${name}</b></div><span>${t}</span></div>`;
+  return `<h1>People</h1><p class="sub">You don't have to do this alone</p>
+  <div class="grid g2"><div class="col">
+    <div class="card gl"><div class="row">${av('M','var(--grn-b)','#fff',56)}<div class="grow"><b style="font-weight:500;font-size:18px">Meera · your godparent</b><div class="muted">Design lead · laid off in 2024 · same field</div></div></div>
+      <div class="row">${ic('call')}<span class="grow">Next call</span><b style="font-weight:500">Today, 7:00 pm</b></div>
+      <div class="btns"><button class="btn grn" data-act="call">${ic('call')}Call</button><button class="btn out" style="color:var(--grn)" data-act="msg">${ic('chat')}Message</button></div></div>
+    <div class="card"><div class="row">${av('K','var(--blue)','#fff',44)}<div class="grow"><b style="font-weight:500">Karan · one stage ahead</b><div class="muted">UX, laid off in August · now at Zeta</div></div>${chip('92% match','c-b')}</div></div>
+    <div class="card"><span class="lbl">Experts</span>
+      <div class="row">${ic('gavel')}<span class="grow">Labour lawyer</span><span class="muted">~4 h callback</span></div>
+      <div class="row">${ic('account_balance_wallet')}<span class="grow">Finance counsellor</span><span class="muted">First session free</span></div>
+      <div class="row">${ic('handshake')}<span class="grow">Negotiation coach</span><span class="muted">Pay after hire</span></div></div>
+    <div class="card bl"><div class="row">${ic('favorite','fill','color:var(--blue)')}<span>If you go quiet for 10 days, Meera will check in. If you're struggling, you can also call Tele-MANAS on 14416.</span></div></div>
+  </div><div class="col">
+    <div class="card bl"><div class="row">${ic('groups')}<b class="grow" style="font-weight:500">Finlo batch · 18 Nov</b><span style="color:var(--blue);font-size:13px">23 verified</span></div>
+      <span>Joint query to HR: severance equal to the batch median (3 months) for all 23 members.</span>
+      <div class="row"><span class="grow">${n} of 23 signed</span><b style="color:var(--blue);font-weight:500">${Math.round(n/23*100)}%</b></div>${bar(n/23*100)}
+      <div><button class="btn" data-act="sign-query" ${S.signed?'disabled':''}>${S.signed?'Your name is added':'Add my name'}</button></div></div>
+    ${msg('R','var(--grn-b)','#fff','Riya','HR replied: they\'ll review by Friday.')}
+    ${msg('K','var(--red-b)','#fff','Kabir','Got 2 months too. Adding my name.')}
+    ${msg('S','var(--yel-b)','var(--ink)','Sana','An old client needs 3 designers for 6 weeks. Studio?')}
+    <span class="muted">Facts only, no managers named. Moderated by an Antarāl veteran.</span>
+  </div></div>`;
+}
+function viewPlan(){
+  const o=+S.offer, lo=19, hi=23, walk=19.5;
+  const pct=Math.max(2,Math.min(100,(o-15)/(25-15)*100));
+  const verdict = o<walk ? ['Below your walk-away line. Negotiate before you reply.','var(--red)'] : o<lo ? ['Above your walk-away line but below market. Worth one ask.','var(--yel)'] : ['Within the market range. A fair offer.','var(--grn)'];
+  return `<h1>Plan</h1><p class="sub">Path: UX research + keep earning</p>
+  <div class="grid g3"><div class="col">
+    <div class="card bl"><span class="lbl" style="color:var(--blue)">Skill forecast · Bengaluru</span>
+      <div class="row">${ic('trending_up','','color:var(--grn)')}<span class="grow">UX research</span><span style="color:var(--grn);font-size:13px">Hiring up 18%</span></div>
+      <div class="row">${ic('trending_flat')}<span class="grow">Motion design</span><span class="muted">Steady</span></div>
+      <div class="row">${ic('trending_down','','color:var(--red)')}<span class="grow">Visual design</span><span style="color:var(--red);font-size:13px">More cuts</span></div></div>
+    <div class="card"><span class="lbl">This week vs people like you</span>
+      <div class="row">${ic('call')}<span class="grow">Calls</span><span>4 · median 6</span></div>${bar(66,'var(--yel-b)')}
+      <div class="row">${ic('groups')}<span class="grow">Interviews</span><span>2 · median 2</span></div>${bar(100,'var(--grn-b)')}</div>
+  </div><div class="col">
+    <div class="card"><div class="row">${ic('design_services')}<b class="grow" style="font-weight:500">Batch studio</b>${chip('Active','c-g')}</div><span class="mid">Kirana app redesign</span><span class="muted">4 designers from your batch · 6 weeks · ₹2.4 L</span>${bar(50,'var(--grn-b)')}<span class="muted">Week 3 of 6</span></div>
+    <div class="card"><span class="lbl">Referrals</span><div class="row">${av('P','var(--yel-b)','var(--ink)',36)}<b style="font-weight:500">Priya · Antarāl veteran at Zeta</b></div>
+      <div><button class="btn out" data-act="referral" ${S.referral?'disabled':''}>${S.referral?'Referral requested':'Request referral'}</button></div></div>
+  </div><div class="col">
+    <div class="card rl"><div class="row">${ic('mail','','color:var(--red)')}<b style="color:var(--red);font-weight:500">New offer from Zeta</b></div></div>
+    <div class="card"><span class="lbl">Offer check · 31 people like you</span>
+      <div class="field"><label for="offer">Their offer (₹ lakh a year)</label><input id="offer" type="number" min="5" max="60" step="0.5" value="${o}" data-offer></div>
+      <div class="row"><span class="grow">Market range</span><b style="font-weight:500">₹${lo}–${hi} L</b></div>
+      <div class="row"><span class="grow">Your walk-away line</span><b style="font-weight:500;color:var(--blue)">₹${walk} L</b></div>
+      ${bar(pct,verdict[1])}<b style="font-weight:500;color:${verdict[1]}">${verdict[0]}</b>
+      <span class="muted">Your runway lets you wait about 6 more weeks. People like you who negotiated got a median of +9%.</span></div>
+    <div class="card"><span class="lbl">Exit terms check</span>
+      <div class="row"><span class="grow">Notice · 60 days</span>${chip('Matches','c-g')}</div>
+      <div class="row"><span class="grow">Severance clause</span>${chip('Missing','c-r')}</div>
+      <div class="row"><span class="grow">Health cover after exit</span>${chip('Included','c-g')}</div>
+      <span class="muted">Ask for the severance clause in writing before you sign.</span></div>
+    <div class="btns"><button class="btn" data-act="script">Negotiation script</button><button class="btn out" data-act="accept">Accept offer</button></div>
+  </div></div>`;
+}
+function viewVault(){
+  const docs=[['description','Offer letter','Saved','c-g'],['request_quote','Payslips (12)','Saved','c-g'],['receipt','Form 16','Saved','c-g'],['mail','Relieving letter','Pending','c-y'],['health_and_safety','Group health policy','Ends 18 Dec','c-r']];
+  return `<h1>Vault</h1><p class="sub">Encrypted · only you can see this unless you share it</p>
+  <div class="grid g2"><div class="col">
+    <div class="card"><span class="lbl">Documents</span>${docs.map(([i,t,s,c])=>`<div class="row">${ic(i)}<span class="grow">${t}</span>${chip(s,c)}</div>`).join('')}</div>
+    <div class="card gl"><div class="row">${ic('health_and_safety','','color:var(--grn)')}<b style="font-weight:500">Port your health cover before 18 Dec</b></div><span class="muted">Keep your waiting-period credit by moving to a personal policy.</span></div>
+  </div><div class="col">
+    <div class="card yl"><div class="row">${ic('record_voice_over','','color:var(--yel)')}<b style="font-weight:500">HR promise log</b></div>
+      ${S.promises.map(p=>`<div><b style="font-weight:500">${esc(p.t)}</b> · ${esc(p.x)}</div>`).join('')}
+      <form id="promiseForm" class="row" style="flex-wrap:wrap"><input class="inp grow" id="promiseText" placeholder="What did HR or your manager promise?" aria-label="New promise" style="min-width:200px"><button class="btn out" style="color:var(--yel)">Log promise</button></form>
+      <span class="muted">Dated notes help if a promise isn't kept. Write what was said, by whom, and how.</span></div>
+  </div></div>`;
+}
+function viewFamily(){
+  const h=S.hideSalary, r=runway();
+  return `<h1>Family brief</h1><p class="sub">Share the plan, not the panic</p>
+  <div class="grid g2"><div class="col">
+    <div class="card outline"><span class="lbl">Preview · what your family sees</span><span class="mid">Arjun is between jobs. Here's the plan.</span>
+      <div class="row">${ic('event')}<span class="grow">Money lasts until</span><b style="font-weight:500">${r.date.split(' ').slice(1).join(' ')}</b></div>
+      ${h?'':`<div class="row">${ic('savings')}<span class="grow">Money set aside</span><b style="font-weight:500">${L(r.pot)}</b></div>`}
+      <div class="row">${ic('home')}<span class="grow">Home-loan EMIs</span><b style="font-weight:500;color:var(--grn)">Covered</b></div>
+      <div class="row">${ic('work')}<span class="grow">This month</span><b style="font-weight:500">Upskilling + paid project</b></div>
+      <b style="font-weight:500">How you can help</b><span class="muted" style="font-size:14px">Ask about the plan, not the job hunt. A weekly dinner helps more than daily check-ins.</span></div>
+  </div><div class="col">
+    <div class="card"><div class="row">${ic('visibility_off')}<span class="grow">Hide money amounts</span><button class="toggle ${h?'on':''}" data-act="hide" aria-label="Hide money amounts"></button></div>
+      <div class="row">${ic('translate')}<span class="grow">Language</span><span class="muted">English · Telugu · Hindi</span></div></div>
+    <button class="btn grn block" data-act="share">${ic('share')}Share on WhatsApp</button>
+  </div></div>`;
+}
+
+/* ---------------- router ---------------- */
+const VIEWS={money:viewMoney,people:viewPeople,plan:viewPlan,vault:viewVault,family:viewFamily};
+function route(){ return (location.hash.replace(/^#\/?/,'')||'home').split('?')[0]; }
+function render(){
+  const r=route(); renderShell(r);
+  const v = VIEWS[r] || (S.mode==='calm'?viewCalm:S.mode==='layoff'?viewLayoff:viewBack);
+  $('#view').innerHTML = v();
+  const pf=$('#promiseForm'); if(pf) pf.addEventListener('submit',e=>{e.preventDefault(); const t=$('#promiseText').value.trim(); if(!t) return; const d=new Date(); S.promises.push({t:d.toLocaleDateString('en-IN',{day:'numeric',month:'short'})+', '+d.toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'}),x:t}); save(); render(); toast('Promise logged with the date and time');});
+}
+window.addEventListener('hashchange',()=>{render(); window.scrollTo(0,0);});
+
+/* ---------------- interactions ---------------- */
+function go(h){ if(location.hash===h) render(); else location.hash=h; }
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act],[data-cut],[data-pledge]'); if(!b) return;
+  if(b.dataset.cut){ S.cuts[b.dataset.cut]=!S.cuts[b.dataset.cut]; save(); render(); return; }
+  if(b.dataset.pledge){ S.pledge[b.dataset.pledge]=!S.pledge[b.dataset.pledge]; save(); render(); return; }
+  const a=b.dataset.act, dlg=$('#signDlg');
+  switch(a){
+    case 'laidoff': S.mode='layoff'; save(); go('#/home'); toast('Layoff mode on. One step at a time.'); break;
+    case 'calm': S.mode='calm'; save(); go('#/home'); break;
+    case 'sign': dlg.showModal(); break;
+    case 'close': dlg.close(); break;
+    case 'copy': navigator.clipboard?.writeText($('#tmpl').textContent).then(()=>toast('Email copied'),()=>toast('Copy failed: select the text instead')); break;
+    case 'lawyer': S.callback=true; save(); if(dlg.open) dlg.close(); render(); toast('Lawyer callback requested · usually within 4 hours'); break;
+    case 'sign-query': S.signed=true; save(); render(); toast('Your name is added to the joint query'); break;
+    case 'duesletter': toast('Letter drafted: leave encashment is overdue under the Code on Wages'); break;
+    case 'call': toast('Calling Meera…'); break;
+    case 'msg': toast('Message sent to Meera'); break;
+    case 'referral': S.referral=true; save(); render(); toast('Priya will get your request'); break;
+    case 'script': toast('Script: "Thank you. Based on the market range for this role, could we meet at ₹20.5 L?"'); break;
+    case 'accept': S.mode='back'; save(); go('#/home'); toast('Congratulations, Arjun'); break;
+    case 'outcome': S.outcome=true; save(); render(); toast('Outcome recorded. Thank you for helping the next person.'); break;
+    case 'hide': S.hideSalary=!S.hideSalary; save(); render(); break;
+    case 'share': { const text='Arjun is between jobs. Money lasts until '+runway().date+'. EMIs are covered. How you can help: ask about the plan, not the job hunt.'; if(navigator.share) navigator.share({title:'Family brief',text}).catch(()=>{}); else { navigator.clipboard?.writeText(text); toast('Brief copied. Paste it into WhatsApp.'); } break; }
+  }
+});
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(t.dataset.fix!==undefined){ S.fixes[+t.dataset.fix]=t.checked; save(); render(); }
+  if(t.dataset.chk!==undefined){ S.checklist[+t.dataset.chk]=t.checked; save(); render(); }
+  if(t.dataset.money){ const v=Math.max(0,+t.value||0); S.money[t.dataset.money]=v; save(); render(); }
+  if(t.dataset.offer!==undefined){ S.offer=Math.max(1,+t.value||S.offer); save(); render(); }
+});
+$('#q').addEventListener('keydown',e=>{ if(e.key!=='Enter') return; const q=e.target.value.toLowerCase(); const map=[['runway|money|emi|pf|dues|f&f|gratuity','money'],['meera|godparent|batch|lawyer|people|peer','people'],['offer|skill|studio|referral|plan','plan'],['document|vault|payslip|promise|health','vault'],['family|parents|brief','family']]; const hit=map.find(([k])=>new RegExp(k).test(q)); if(hit) go('#/'+hit[1]); else toast('Try "runway", "Meera", "offer", "payslips" or "family"'); });
+$('#resetBtn').addEventListener('click',()=>{ S=structuredClone(DEFAULT); save(); go('#/home'); toast('Prototype reset to the start of the story'); });
+render();
+</script>
+</body>
+</html>
