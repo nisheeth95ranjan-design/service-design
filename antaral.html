@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Antarāl · Prototype</title>
+<title>Antarāl · Mobile</title>
 <meta name="description" content="Antarāl: know your worth on the way in, see trouble early, and never face the way out alone. Service design prototype.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -111,10 +111,11 @@ dialog{border:0;border-radius:28px;padding:24px;max-width:560px;width:calc(100% 
 dialog::backdrop{background:rgba(0,0,0,.32)}
 dialog h2{font-weight:400;font-size:24px;margin:0 0 8px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#303030;color:#fff;padding:14px 20px;border-radius:12px;transition:transform .25s;z-index:20;max-width:calc(100% - 32px)}
-.toast.show{transform:translateX(-50%) translateY(0)}
+.toast{opacity:0;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
 /* ---------- mobile ---------- */
-@media (max-width:900px){
+@media all{
   .app{display:block}
   .drawer,.top{display:none}
   .mobilebar{display:flex;align-items:center;gap:10px;padding:14px 16px;position:sticky;top:0;background:var(--page);z-index:5}
@@ -134,6 +135,18 @@ dialog h2{font-weight:400;font-size:24px;margin:0 0 8px}
   .bottomnav a.on .pill{background:var(--blue-on)}
   .bottomnav a.on .ms{color:var(--blue-ink);font-variation-settings:"FILL" 1}
   .toast{bottom:96px}
+}
+
+/* ---------- phone frame on wide screens ---------- */
+html{background:#E8EAED}
+.app{max-width:430px;margin:0 auto;min-height:100vh;background:var(--page);position:relative}
+.bottomnav{left:50% !important;right:auto !important;transform:translateX(-50%);width:100%;max-width:430px}
+@media (min-width:500px){
+  body{padding:24px 0;background:#E8EAED}
+  .app{border-radius:32px;overflow:clip;box-shadow:0 8px 40px rgba(0,0,0,.15);min-height:calc(100vh - 48px)}
+  .mobilebar{border-radius:32px 32px 0 0}
+  .bottomnav{bottom:24px;border-radius:0 0 32px 32px}
+  .toast{bottom:120px}
 }
 </style>
 </head>
